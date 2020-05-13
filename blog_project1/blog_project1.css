@@ -17,11 +17,6 @@ body {
 }
 .title {
     grid-area: hd;
-    /*
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center; */
     background-image: url(./header_image.png);
     background-repeat: no-repeat;
     background-size: 50%;
@@ -50,6 +45,10 @@ body {
 }
 .footer {
     grid-area: ft;
+    color: lightslategray;
+    font-size: 14px;
+    margin: 10px;
+    margin-left: 10px;
 }
 .button {
     background-color: #4CAF50; /* Green */
