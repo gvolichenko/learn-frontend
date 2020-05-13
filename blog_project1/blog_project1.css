@@ -27,11 +27,6 @@ body {
     background-image: url(./gv_prof_pic.jpg);
     background-size: cover;
 }
-.menu_container{ /* this is needed to keep all menu buttons at the top */
-    display:flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
 .menu{ /* this should be displayed at the top for mobile */
     grid-area: nav;
     display: flex;
