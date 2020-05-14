@@ -2,9 +2,10 @@ body {
  font-family: Arial, Helvetica, sans-serif;
 }
 
+/* CLASSES */
 .container {
     display: grid;
-    border: 2px solid green;
+    /* border: 2px solid green; */
     grid-template-columns: 120px 1fr;
     grid-template-rows: 120px 8fr 0.5fr;
     grid-template-areas: 
@@ -13,7 +14,14 @@ body {
         "ft ft"  ;
 }
 .box {
-    border: 1px solid orchid;
+    /* Used for debugging. */
+    border: 1px solid white; 
+}
+.imgbox {
+    border: 1px solid white; 
+}
+.imgbox:hover{
+    border: 1px solid darkgreen;
 }
 .title {
     grid-area: hd;
@@ -27,16 +35,17 @@ body {
     background-image: url(./gv_prof_pic.jpg);
     background-size: cover;
 }
-.menu{ /* this should be displayed at the top for mobile */
+.menu{ /* this is displayed above the content for small screens */
     grid-area: nav;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items:  center;
-    border: 5px solid white;
+    margin: 10px;
 }
 .content {
-    grid-area: cnt; 
+    grid-area: cnt;
+    margin-left: 20px; 
 }
 .footer {
     grid-area: ft;
@@ -46,7 +55,7 @@ body {
     margin-left: 10px;
 }
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50; 
     border: none;
     color: white;
     padding: 15px 20px;
@@ -80,11 +89,38 @@ body {
     color: lightslategray;
     font-size: 12px;
 }
+
+/* IDs */
  #pressed{
     background-color: darkgreen;
  } 
 
+ 
+/* TYPOGRAPHY SELECTOR PROPERTIES */
+h1 {
+    color: darkgreen;
+    font-size: 24px;
+    font-style: italic;
+}
+h2 {
+    color: darkgreen;
+    font-size:18px;
+    font-style: underline; 
+}
+h3 {
+    color: lightslategray;
+    font-size: 10pt;
+    font-style: oblique;
+}
+p {
+    color: darkgreen;
+}
+a:hover{
+    color: darkred;
+    font-weight: bold;
+}
 
+/* RESPONSIVE STUFF */
  /* Largest screens 3x3 */
  @media (min-width:901px) {
     .gallery {
