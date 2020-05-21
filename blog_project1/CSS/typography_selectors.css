@@ -1,0 +1,35 @@
+ 
+/* TYPOGRAPHY SELECTOR PROPERTIES */
+h1 {
+    color: darkgreen;
+    font-size: 24px;
+    font-style: italic;
+}
+h2 {
+    color: darkgreen;
+    font-size:18px;
+    font-style: underline; 
+}
+h3 {
+    color: lightslategray;
+    font-size: 10pt;
+    font-style: oblique;
+}
+p {
+    color: darkgreen;
+    text-decoration: underline;
+    font-weight: bold;
+    font-style: italic;
+}
+a:hover {
+    color: darkred;
+    font-weight: bold;
+}
+blockquote {
+    color: teal;
+    font-style:italic
+}
+blockquote:hover {
+    color: red;
+    font-size: 15pt;
+}
