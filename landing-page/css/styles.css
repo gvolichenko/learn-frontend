@@ -28,8 +28,8 @@ h1 {
 
 @media only screen and (min-width: 35em){
     h1 {
-        font-size: 7em;
-        margin: 2em 4rem 1em;
+        font-size: 4em;
+        margin: 3em 4rem 1em;
     }
 }
 
@@ -72,6 +72,7 @@ section {
 
 .navbar__menu li {
     display: inline-block;
+    color: #000;
 }
 
 .navbar__menu .menu__link {
@@ -87,6 +88,11 @@ section {
     color: #fff;
     transition: ease 0.3s all;
 }
+.active__header {
+    position:fixed;
+    top:200;
+}
+
 
 /* Header Styles */
 .page__header {
@@ -96,6 +102,10 @@ section {
     width: 100%;
     z-index: 5;
 }
+.active__section{
+    color: #000;
+}
+
 
 /* Footer Styles */
 .page__footer {
