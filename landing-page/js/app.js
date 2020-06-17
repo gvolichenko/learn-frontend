@@ -17,10 +17,9 @@
  * Define Global Variables
  * 
 */
-// Is there a better way to pull all sections headers? 
-// What if some of them are not h2? 
 const sections = document.querySelectorAll('section'); 
 const navList = document.querySelector('#navbar__list');
+
 
 /**
  * End Global Variables
@@ -29,15 +28,36 @@ const navList = document.querySelector('#navbar__list');
 */
 // Optional: Function for adding li elements from sectionHeaders to a navList 
 
+// This function is screwy. 
 const isInViewport = function (elem) {
     const bounding = elem.getBoundingClientRect();
     return (
-        bounding.top >= 0 &&
-        bounding.left >= 0 &&
-        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-        bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+         // Active means very top of section is anywhere in viewport, so could be towards the bottom.
+        bounding.top >= bottomOfNav &&
+        bounding.top <= (window.innerHeight || document.documentElement.clientHeight) 
     );
 };
+const inViewportActive = function(elem,elemHead) {
+     // previously active class remains active
+     if(isInViewport(elem) && elem.classList.contains('your-active-class'))
+     { 
+         return; 
+     }
+     // new active class, remove from previously active 
+     else if (isInViewport(elem)) 
+     { 
+         const prevActive = document.querySelector('section.your-active-class');
+         // remove from previously active 
+         prevActive.classList.remove('your-active-class');
+         elem.classList.add('your-active-class');
+         // repeat re-assignment steps for the Nav Items 
+         const prevActiveHead = navList.querySelector('.your-active-class');
+         prevActiveHead.classList.remove('your-active-class');
+         console.log(elemHead);
+         elemHead.classList.add('your-active-class');
+     } 
+     return;
+}
 
 /**
  * End Helper Functions
@@ -45,6 +65,15 @@ const isInViewport = function (elem) {
  * 
 */
 
+// ¯\_(ツ)_/¯  
+
+/**
+ * End Main Functions
+ * Begin Events
+ * 
+*/
+
+// Build menu 
 // build the nav: loop through section headers, create an li and append 
 
 for(const sect of sections) {
@@ -58,63 +87,37 @@ for(const sect of sections) {
     // add to navList
     navList.appendChild(newLi);
 }
-
+// in the start, set the first section header to have active class
+const navListItems = navList.childNodes;
+navListItems[1].classList.add('your-active-class');
+// now that the menu is built, let's see where it ends. It will define our viewport
+const bottomOfNav = document.querySelector('.page__header').getBoundingClientRect().bottom;
+console.log(bottomOfNav);
 
 // Add class 'active' to section when near top of viewport. 
 // also remove from the inactive one
 
 window.addEventListener('scroll',function(event){
     // loop through all sections and re-assign active class
-    let passiveSections=0;
-    for(sect of sections){
-        // previously active class remains active
-        if(isInViewport(sect) && sect.classList.contains('active-class'))
-        { 
-            break; 
-        }
-        // new active class, remove from previously active 
-        else if (isInViewport(sect)) 
-        { 
-            const prevActive = document.querySelector('.active-class');
-            // remove from previously active 
-            prevActive.classList.remove('active-class');
-            sect.classList.add('active-class');
-        }   
-    }    
+    let sect_i = 1; 
+    for(const sect of sections){
+       inViewportActive(sect,navListItems[sect_i]);
+       sect_i++;
+    } 
 })
-
-// when a class is active, but it's header is above the fold. We want to fix it at the top.
-
-window.addEventListener('scroll',function(event){
-    const activeSect = document.querySelector('.active-class');
-    const sectHead = activeSect.querySelector('h2');
-    // if the active's section header is not in viewport, fix it at the top
-    if(!isInViewport(sectHead)){
-       /*
-       fixedHeader = document.createElement('h2');
-       fixedHeader.classList.add('fixed__header');
-       fixedHeader.textContent = sectHead.textContent;
-       activeSect.querySelector('.landing__container').prepend(fixedHeader);
-       //console.log(fixedHeader); */
-        const fixedHeader = document.querySelector('.active__section');
-        fixedHeader.querySelector('h2').textContent = sectHead.textContent;
-        }
-})
-
-
-// Scroll to anchor ID using scrollTO event
-
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
-
-// Build menu 
 
 // Scroll to section on link click
+// remove default behavior from clicking on a link. 
 
-// Set sections as active
-
-
+// Scroll to anchor ID using scrollTO event
+navList.addEventListener('click',function(event){
+    // only do this for link clicks and not clicks anywhere in the nav
+    if(event.target.tagName=="A") {
+        event.preventDefault();
+        // get some id for the section to scroll to
+        linkValue = event.target.getAttribute("href");
+        // pull the section to scroll to
+        const sectToScroll=document.querySelector(`${linkValue}`);
+        sectToScroll.scrollIntoView('');
+    }
+})
