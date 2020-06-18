@@ -24,6 +24,7 @@ h1 {
     font-family: 'Fira Sans', sans-serif;
     font-size: 3em;
     margin: 2em 1rem;
+    margin-top: 5em;
 }
 
 @media only screen and (min-width: 35em){
@@ -58,6 +59,7 @@ main {
 section {
     position: relative;
     min-height: 80vh;
+    scroll-margin-top: 15rem;
 }
 
 
@@ -65,9 +67,12 @@ section {
 
 /* Navigation Styles*/
 .navbar__menu ul {
-    padding-left: 0;
-    margin: 0;
-    text-align: right;
+    padding-left: 5px;
+    margin: 10px; 
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .navbar__menu li {
@@ -76,7 +81,6 @@ section {
 }
 
 .navbar__menu .menu__link {
-    display: block;
     padding: 1em;
     font-weight: bold;
 }
@@ -85,7 +89,7 @@ section {
     background: rgb(136,203,171);
     color: #fff;
     transition: ease 0.3s all;
-    border-radius: 13px;
+    border-radius: 25px;
 }
 
 

@@ -38,13 +38,16 @@ const isInViewport = function (elem) {
     );
 };
 const inViewportActive = function(elem,elemHead) {
-     // previously active class remains active
-     if(isInViewport(elem) && elem.classList.contains('your-active-class'))
+    // we actually care about the landing container being visible
+    elemToLand = elem.querySelector(".landing__container");
+    // previously active class remains active
+     if(isInViewport(elemToLand) && 
+     elem.classList.contains('your-active-class'))
      { 
          return; 
      }
      // new active class, remove from previously active 
-     else if (isInViewport(elem)) 
+     else if (isInViewport(elemToLand)) 
      { 
          const prevActive = document.querySelector('section.your-active-class');
          // remove from previously active 
@@ -53,7 +56,6 @@ const inViewportActive = function(elem,elemHead) {
          // repeat re-assignment steps for the Nav Items 
          const prevActiveHead = navList.querySelector('.your-active-class');
          prevActiveHead.classList.remove('your-active-class');
-         console.log(elemHead);
          elemHead.classList.add('your-active-class');
      } 
      return;
@@ -91,8 +93,7 @@ for(const sect of sections) {
 const navListItems = navList.childNodes;
 navListItems[1].classList.add('your-active-class');
 // now that the menu is built, let's see where it ends. It will define our viewport
-const bottomOfNav = document.querySelector('.page__header').getBoundingClientRect().bottom;
-console.log(bottomOfNav);
+let bottomOfNav = document.querySelector('.page__header').getBoundingClientRect().bottom;
 
 // Add class 'active' to section when near top of viewport. 
 // also remove from the inactive one
@@ -101,6 +102,7 @@ window.addEventListener('scroll',function(event){
     // loop through all sections and re-assign active class
     let sect_i = 1; 
     for(const sect of sections){
+       // i should run this on the landing__container (child)
        inViewportActive(sect,navListItems[sect_i]);
        sect_i++;
     } 
@@ -118,6 +120,6 @@ navList.addEventListener('click',function(event){
         linkValue = event.target.getAttribute("href");
         // pull the section to scroll to
         const sectToScroll=document.querySelector(`${linkValue}`);
-        sectToScroll.scrollIntoView('');
+        sectToScroll.scrollIntoView({behavior: "smooth"});
     }
 })
