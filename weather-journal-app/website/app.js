@@ -80,7 +80,8 @@ function performAction(e){
     )
 };
 
-
+// This function was found on 
+// https://www.w3resource.com/javascript-exercises/javascript-regexp-exercise-12.php
 function isUsZipCode(str)
 {
  regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
