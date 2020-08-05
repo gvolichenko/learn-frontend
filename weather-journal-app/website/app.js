@@ -65,7 +65,10 @@ const retrieveAndUpdate = async () => {
 
 function performAction(e){
     const newZip =  document.getElementById('zip').value;
-    
+    // Needs a vaid zip code for the API call.
+    if(!isUsZipCode(newZip)){
+        alert('Please enter a valid US zipcode.');
+    }
     // chaining promises below
     pullWeather(baseUrl,newZip,apiKey)
     .then(function(data){
@@ -77,4 +80,18 @@ function performAction(e){
     )
 };
 
+
+function isUsZipCode(str)
+{
+ regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
+  
+        if (regexp.test(str))
+          {
+            return true;
+          }
+        else
+          {
+            return false;
+          }
+};
 
