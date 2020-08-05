@@ -66,7 +66,7 @@ const retrieveAndUpdate = async () => {
 function performAction(e){
     const newZip =  document.getElementById('zip').value;
     // Needs a vaid zip code for the API call.
-    if(!isUsZipCode(newZip)){
+    if(!isUsZip(newZip)){
         alert('Please enter a valid US zipcode.');
     }
     // chaining promises below
@@ -80,19 +80,11 @@ function performAction(e){
     )
 };
 
-// This function was found on 
-// https://www.w3resource.com/javascript-exercises/javascript-regexp-exercise-12.php
-function isUsZipCode(str)
+function isUsZip(str)
 {
  regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
   
-        if (regexp.test(str))
-          {
-            return true;
-          }
-        else
-          {
-            return false;
-          }
+        if (regexp.test(str)){return true;}
+        else{return false;}
 };
 
