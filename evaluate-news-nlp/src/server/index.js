@@ -35,13 +35,24 @@ app.listen(8081, function () {
 console.log(`Your API key is ${process.env.API_KEY}`);
 
 
+textInput = {};
+// POST route to get the text input
+app.post('/posttext', inputText);
+
+function inputText (req,res){
+    
+    textInput = req.body;
+    console.log('POSTED:',textInput);
+    res.send('done');
+};
+
 
 // GET route
 app.get('/test', function (req, res) {
     
     const url='https://api.meaningcloud.com/sentiment-2.1';
-    const tempText = 'I am not sure it\'s a good idea'
-    fetch(`${url}?key=${process.env.API_KEY}&lang=en&txt=${tempText}`)
+    //const textInput = 'I am not sure it\'s a good idea'
+    fetch(`${url}?key=${process.env.API_KEY}&lang=en&txt=${textInput.input}`)
     .then(res => res.json())
     .then(function(data) {
         console.log(data)
