@@ -5,6 +5,7 @@ var cors = require('cors')
 var bodyParser = require('body-parser')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
+const fetch = require("node-fetch");
 
 const app = express()
 
@@ -37,9 +38,15 @@ console.log(`Your API key is ${process.env.API_KEY}`);
 
 // GET route
 app.get('/test', function (req, res) {
-    console.log(req.body);
-    //let json = {'message': req}
-    //res.send(json)
+    
+    const url='https://api.meaningcloud.com/sentiment-2.1';
+    const tempText = 'I am not sure it\'s a good idea'
+    fetch(`${url}?key=${process.env.API_KEY}&lang=en&txt=${tempText}`)
+    .then(res => res.json())
+    .then(function(data) {
+        console.log(data)
+        res.send(data)
+    })
 })
 
 
