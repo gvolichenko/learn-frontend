@@ -32,7 +32,6 @@ app.listen(8081, function () {
     console.log('Example app listening on port 8081!')
 })
 
-console.log(`Your API key is ${process.env.API_KEY}`);
 
 
 textInput = {};
@@ -42,20 +41,17 @@ app.post('/posttext', inputText);
 function inputText (req,res){
     
     textInput = req.body;
-    console.log('POSTED:',textInput);
     res.send('done');
 };
 
 
-// GET route
+// GET route to call the API and return the result to the client
 app.get('/test', function (req, res) {
     
     const url='https://api.meaningcloud.com/sentiment-2.1';
-    //const textInput = 'I am not sure it\'s a good idea'
     fetch(`${url}?key=${process.env.API_KEY}&lang=en&txt=${textInput.input}`)
     .then(res => res.json())
     .then(function(data) {
-        console.log(data)
         res.send(data)
     })
 })

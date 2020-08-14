@@ -14,6 +14,7 @@ function checkForName(inputText) {
     }
     */
    if(/\d/.test(inputText)){
+       return('firing an alert');
        alert("Please check that your input does not contain numbers")
    }
 }

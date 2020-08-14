@@ -2,25 +2,14 @@ function handleSubmit(event) {
     event.preventDefault()
 
     // check what text was put into the form field
-    let formText = document.getElementById('name').value
+    const formText = document.getElementById('name').value
     Client.checkForName(formText)
 
-    //fetch('http://localhost:8081/posttext',)
-    /*
-    console.log("::: Form Submitted :::")
-    fetch('http://localhost:8081/test')
-    .then(res => res.json())
-    .then(function(res) {
-        console.log(res)
-        document.getElementById('results').innerHTML = res.sentence_list[0].text
-    }) */
     
-    const inputText = document.getElementById('name').value;
-
-    postInput('http://localhost:8081/posttext',inputText)
+    postInput('http://localhost:8081/posttext',formText)
     .then(function(){
-        console.log('getting the result')
-        getResult()
+        const result = getResult();
+        return(result);
     })
 
 }
@@ -28,7 +17,6 @@ function handleSubmit(event) {
 // 'process input and post to server' function
 const postInput = async (url= '',userInput) => {
     
-    Client.checkForName(userInput)
     const toPost = {input:userInput};
     const response = await fetch(url, {
         method: 'POST', 
@@ -38,13 +26,7 @@ const postInput = async (url= '',userInput) => {
         },
         body: JSON.stringify(toPost) // body data type must match "Content-Type" header   
       })
-      try {
-          console.log("input posted")
-       // const newDataObj = await response.json();
-       // return newDataObj;
-      }catch(error) {
-      console.log("error", error);
-      }
+      return 'done posting';
 }
 
 
@@ -54,11 +36,11 @@ const getResult = async () => {
     const request = await fetch('http://localhost:8081/test');
     try{
         const sentimentData = await request.json()
-        console.log('populating results')
-        document.getElementById('text').innerHTML = sentimentData.sentence_list[0].text
-        document.getElementById('agreement').innerHTML = sentimentData.sentence_list[0].agreement
-        document.getElementById('subjectivity').innerHTML = sentimentData.subjectivity
-        document.getElementById('irony').innerHTML = sentimentData.irony
+        document.getElementById('text').innerHTML = `Text: ${sentimentData.sentence_list[0].text}`
+        document.getElementById('agreement').innerHTML = `Agreement: ${sentimentData.sentence_list[0].agreement}`
+        document.getElementById('subjectivity').innerHTML = `Subjectivity: ${sentimentData.subjectivity}`
+        document.getElementById('irony').innerHTML = `Irony: ${sentimentData.irony}`
+        return(sentimentData);
     }
     catch(error) {
         console.log("error",error);
@@ -68,9 +50,4 @@ const getResult = async () => {
 
 
 
-export { handleSubmit }
-
-// need to post the text to the server
-// then the server will make the api call
-// inside of a GET route definition 
-// first make sure that i can post the text and return it back
+export { handleSubmit,getResult,postInput }
