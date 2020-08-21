@@ -27,7 +27,8 @@ const travelApp = () => {
             // need to handle undefined here for obscure destinations
             return geoJSON;
         }
-        catch(error){console.log('ERROR!',error)}
+        catch(error){console.log('ERROR!',error)
+        alert ("There was an issue with your destination")}
     };
     const pullWeather = async (baseurl,key,lat,lon,prevData) => {
         const weather = await fetch(baseurl+'?key='+key+'&lat='+lat+'&lon='+lon);
@@ -38,10 +39,14 @@ const travelApp = () => {
          
             return prevData;
         }
-        catch(error){console.log('ERROR!',error)}
+        catch(error){console.log('ERROR!',error)
+        alert ("There was an issue with your destination")}
     };
     const pullImage = async(baseurl,key,prevData) => {
-        const imageData = await fetch(baseurl+'?key='+key+'&q='+prevData.placeName+'&category=travel')
+        // replace spaces with + signs
+        const fixedPlaceName = prevData.placeName.split(' ').join('+')
+        console.log(fixedPlaceName)
+        const imageData = await fetch(baseurl+'?key='+key+'&q='+fixedPlaceName+'&category=travel')
         try{
             const imageJSON = await imageData.json();
             //only using the first result
@@ -51,7 +56,8 @@ const travelApp = () => {
             return prevData;
             //prevData.imageUrl = 
         }
-        catch(error){console.log('ERROR!',error)}
+        catch(error){console.log('ERROR!',error)
+        alert ("There was an issue with your destination")}
     }
     // Async POST to my server
     const postData = async (url = '', geoObj)=>{
@@ -88,10 +94,8 @@ const travelApp = () => {
                 `Trip Date: ${recentData.tripdate}`;
                 document.getElementById('countdown').innerHTML = 
                 `Days Left: ${recentData.countdown}`;
-                document.getElementById('latitude').innerHTML = 
-                `Latitude: ${recentData.lat}`;
-                document.getElementById('longitude').innerHTML = 
-                `Longitude: ${recentData.lng}`;
+                document.getElementById('temperature').innerHTML = 
+                `Temp Forecast: ${recentData.temperature}`;
                 document.getElementById('placename').innerHTML = 
                 `Placename: ${recentData.placeName}`;
             }
