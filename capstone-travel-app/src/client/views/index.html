@@ -2,31 +2,37 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Weather Journal</title>
+<title>Travel App</title>
 <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../styles/style.css">
 </head>
  <body>
 <div id = "app">
-  <div class ="holder headline">
-    Weather Journal App
+  <div class ="headline">
+    The Great Travel App
   </div>
-  <div class ="holder zip">
-    <label for="zip">Enter Zipcode here</label>
-    <input type="text" id="zip" placeholder="enter zip code here">
+  <div class ="destination">
+    <label for="destination">Enter Your Destination Here</label>
+    <input type="text" id="destination" value="Detroit">
   </div>
-  <div class ="holder feel">
-    <label for="feelings">How are you feeling today?</label>
-    <textarea class= "myInput" id="feelings" placeholder="Enter your feelings here" rows="9" cols="50"></textarea>
+  <div class ="tripdate">
+    <label for="tripdate">And the date</label>
+    <input type="date" class= "myInput" id="tripdate" value='2020-09-01'></textarea>
+  </div>
+  <div class="image_container">
+    <img id="main_image" 
+    src="https://cdn.pixabay.com/photo/2016/01/19/15/48/luggage-1149289_1280.jpg">
+  </div>
+  <div class = "button_container">
     <button id="generate" type = "submit"> Generate </button>
   </div>
-  <div class ="holder entry">
+  <div class ="entry">
     <div class = "title">Most Recent Entry</div>
    <div id = "entryHolder">
-    <div id = "date"></div>
-    <div id = "city"></div> 
-   <div id = "temp"></div>
-   <div id = "content"></div>
+    <div id = "tripdateDisplay"></div>
+    <div id = "countdown"></div>
+    <div id = "latitude"></div>
+    <div id = "longitude"></div>
+    <div id = "placename"></div>
   </div>
   </div>
   </div>

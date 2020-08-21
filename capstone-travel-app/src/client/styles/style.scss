@@ -7,18 +7,16 @@ body{
     display: grid;
     grid-auto-rows: minmax(150px, auto);
     /* grid-template-columns:  */
-    height:100vh;
-    background: #f23557;
-    color: #f0d43a;
+    height:auto;
+    background: lightcoral;
+    color: black;
     justify-content: center;
     grid-gap: 1em;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
+    padding: 20px;
 }
 
-.holder{
-
-}
 
 .entry{
     background: rgba(59, 74, 107, .4);
@@ -41,13 +39,22 @@ body{
 }
 
 .headline {
-
+    height: 20vh;
+    font-size:50px
 }
 .title{
 
 }
+.button_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
+img{
+    width:90%;
+}
 label{
     display:block;
     font-size: 27px;
@@ -65,8 +72,9 @@ input{
 }
 
 button{
-    width: 400px;
-    height: 100px;
+    align-self: center;
+    width: 300px;
+    height: 50px;
     background: #3b4a6b;
     color: #f0d43a;
     font-size: 26px;
