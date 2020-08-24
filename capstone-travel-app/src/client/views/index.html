@@ -10,28 +10,36 @@
   <div class ="headline">
     The Great Travel App
   </div>
-  <div class ="destination">
-    <label for="destination">Enter Your Destination Here</label>
-    <input type="text" id="destination" value="Detroit">
+  <div class="input_container">
+    <div class ="destination">
+      <label for="destination">Enter Your Destination Here</label>
+      <input type="text" id="destination" value="Detroit">
+    </div>
+    <div class ="tripdate">
+      <label for="tripdate">And the date</label>
+      <input type="date" class= "myInput" id="tripdate" value='2020-09-01'></textarea>
+    </div>
+    <div class = "button_container">
+      <button id="generate" type = "submit"> Generate </button>
+    </div>
+    <div class="image_container">
+      <img id="main_image" 
+      src="https://cdn.pixabay.com/photo/2016/01/19/15/48/luggage-1149289_1280.jpg">
+    </div>
   </div>
-  <div class ="tripdate">
-    <label for="tripdate">And the date</label>
-    <input type="date" class= "myInput" id="tripdate" value='2020-09-01'></textarea>
-  </div>
-  <div class="image_container">
-    <img id="main_image" 
-    src="https://cdn.pixabay.com/photo/2016/01/19/15/48/luggage-1149289_1280.jpg">
-  </div>
-  <div class = "button_container">
-    <button id="generate" type = "submit"> Generate </button>
-  </div>
+  
   <div class ="entry">
-    <div class = "title">Most Recent Entry</div>
-   <div id = "entryHolder">
+    
+   <div class = "entryHolder">
+    <div class = "title">Useful details for your trip</div> 
+    <div id = "placename"></div>
     <div id = "tripdateDisplay"></div>
     <div id = "countdown"></div>
     <div id = "temperature"></div>
-    <div id = "placename"></div>
+  </div>
+  <div class = "country_holder">
+    <img id="flag">
+    <div id="country"></div>
   </div>
   </div>
   </div>

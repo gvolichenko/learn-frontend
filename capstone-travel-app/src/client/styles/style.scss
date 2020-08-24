@@ -5,60 +5,85 @@ body{
 
 #app{
     display: grid;
-    grid-auto-rows: minmax(150px, auto);
+    grid-template-rows: auto auto 300px;
     /* grid-template-columns:  */
     height:auto;
     background: lightcoral;
     color: black;
     justify-content: center;
-    grid-gap: 1em;
+    grid-gap: 2em;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
     padding: 20px;
 }
-
+#temperature{
+    font-size: 25px;
+}
 
 .entry{
+    display: grid;
+    grid-template-columns: 6fr 4fr;
     background: rgba(59, 74, 107, .4);
+    padding-top: 10px;
+    padding-left: 20px;
+}
+.country_holder img {
+    width:100px;
+    height:auto;
+}
+.country_holder{
+    text-align: right;
+    padding-right: 10px;
+    color: lightgrey;
+    font-style: italic;
 }
 
-#entryHolder{
-
-}
-
-#date{
-
-}
-
-#temp{
-
-}
-
-#content{
-
+.title {
+    color:lightcoral;
+    font-size: 18px;
 }
 
 .headline {
-    height: 20vh;
     font-size:50px
 }
-.title{
 
-}
 .button_container {
+    grid-area: button;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.input_container{ 
+    display: grid;
+    grid-template-columns: 4fr 6fr;
+    grid-template-rows: 1fr 1fr;
+    column-gap: 10px;
+    row-gap: 10px;
+    grid-template-areas: 
+        "dest img"
+        "date img"
+        "button img" ;
+}
+.destination{
+    grid-area: dest;
+}
+.tripdate{
+    grid-area:date;
 }
 .image_container {
+    grid-area: img;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-}
+    margin: 50px;
+    }
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
 img{
-    width:90%;
+    width:100%;
+    min-width: 120px;
 }
 label{
     display:block;
@@ -77,9 +102,10 @@ input{
 }
 
 button{
-    align-self: center;
-    width: 300px;
-    height: 50px;
+    
+    align-self: left;
+    width: 200px;
+    height: 40px;
     background: #3b4a6b;
     color: #f0d43a;
     font-size: 26px;
@@ -97,6 +123,32 @@ textarea{
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
 }
+
+ /* Tiny screens 2x5*/
+ @media (max-width:601px) {
+    .input_container {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 120px 120px 100px 1fr;
+        column-gap: 10px;
+        grid-template-areas: 
+            "dest "
+            "date "
+            "button"
+            "img"
+            "img" ;
+     }
+     .headline {
+        font-size:40px
+    }
+    .flag img {
+        width:80px;
+    }
+    .title {
+        font-size: 15px;
+    }
+ }
+
 /* Reset style for HTML element on active to have no border*/
 input:focus,
 select:focus,

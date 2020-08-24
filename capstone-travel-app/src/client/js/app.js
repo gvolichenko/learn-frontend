@@ -11,6 +11,7 @@ const travelApp = () => {
     const weatherKey = '12f912ce28cd4e22b9489e58e33fde80';
     const pixabayKey = '17953846-1440414bb91ba9252c04bc61e';
     const pixabayBaseUrl = 'https://pixabay.com/api/';
+    const countryUrl = 'https://restcountries.eu/rest/v2/alpha/';
 
     // Async GET from OPW API
     const pullGeo = async (baseurl,city,username,tripDate) => {
@@ -18,7 +19,13 @@ const travelApp = () => {
         try{
             let geoJSON = await geo.json();
             // limited to the first location from the array
-            geoJSON = geoJSON.postalCodes[0]
+            
+            // For US we want the second result because 
+            // "For the US the first returned zip code is determined using zip code area shapes"
+            if (geoJSON.postalCodes.length>1 && geoJSON.postalCodes[1].countryCode=="US") {
+                geoJSON = geoJSON.postalCodes[1]    
+            }
+            else {geoJSON = geoJSON.postalCodes[0]}
             geoJSON.tripdate = tripDate;
             let countdownDays = dateCountdown(tripDate);
             // handle same days trips
@@ -45,13 +52,18 @@ const travelApp = () => {
     const pullImage = async(baseurl,key,prevData) => {
         // replace spaces with + signs
         const fixedPlaceName = prevData.placeName.split(' ').join('+')
-        console.log(fixedPlaceName)
+        // add state, for non-US country code
+        let updatePlaceName = fixedPlaceName.split('+').join(' ')
+        if(prevData.countryCode=="US"){updatePlaceName = updatePlaceName + ', ' +prevData.adminCode1}
+        else {updatePlaceName = updatePlaceName + ', '+prevData.countryCode};
+        // store the complete placename
+        prevData.updatedplacename = updatePlaceName;
+        
         const imageData = await fetch(baseurl+'?key='+key+'&q='+fixedPlaceName+'&category=travel')
         try{
             const imageJSON = await imageData.json();
             //only using the first result
             prevData.imageUrl = imageJSON.hits[0].largeImageURL;
-            swapImageLink(prevData.imageUrl)
             
             return prevData;
             //prevData.imageUrl = 
@@ -59,15 +71,18 @@ const travelApp = () => {
         catch(error){console.log('ERROR!',error)
         alert ("There was an issue with your destination")}
     }
+    const pullCountry = async(baseurl,prevData)=>{
+        const countryData = await fetch(baseurl+prevData.countryCode)
+        try{
+            const countryJSON = await countryData.json();
+            prevData.flagUrl = countryJSON.flag;
+            prevData.countryName = countryJSON.name;
+            return prevData;
+        }
+        catch(error){console.log('ERROR!',error)}
+    }
     // Async POST to my server
     const postData = async (url = '', geoObj)=>{
-       /*
-        const toPost = {lat:geoObj.lat,
-        lng: geoObj.lng,
-        placeName: geoObj.placeName ,
-        tripdate: geoObj.tripdate,
-        countdown: geoObj.countdown,};
-        */
             
         const response = await fetch(url, {
             method: 'POST', 
@@ -83,7 +98,7 @@ const travelApp = () => {
         }catch(error) {
         console.log("error", error);
         }
-
+        return 'done posting';
     };
 
     const retrieveAndUpdate = async () => {
@@ -95,9 +110,15 @@ const travelApp = () => {
                 document.getElementById('countdown').innerHTML = 
                 `Days Left: ${recentData.countdown}`;
                 document.getElementById('temperature').innerHTML = 
-                `Temp Forecast: ${recentData.temperature}`;
+                `Temp Forecast (C): ${recentData.temperature}`;
                 document.getElementById('placename').innerHTML = 
-                `Placename: ${recentData.placeName}`;
+                `Placename: ${recentData.updatedplacename}`;
+                // replace the main image 
+                swapImageLink("main_image",recentData.imageUrl);
+                // replace the flag image
+                swapImageLink("flag",recentData.flagUrl);
+                document.getElementById('country').innerHTML = recentData.countryName;
+
             }
             catch(error) {
                 console.log("error",error);
@@ -118,15 +139,16 @@ const travelApp = () => {
         // chaining promises below
         pullGeo(geoBaseUrl,newCity,geoUsername,tripDate)
         .then(function(data){
-            const weather = pullWeather(weatherBaseUrl,weatherKey,data.lat,data.lng,data)
-            return weather;
+            return pullWeather(weatherBaseUrl,weatherKey,data.lat,data.lng,data)
         })
         .then(function(data){
-            const imgData = pullImage(pixabayBaseUrl,pixabayKey,data)
-            return imgData;
+            return pullImage(pixabayBaseUrl,pixabayKey,data)
         })
         .then(function(data){
-            //console.log(data)
+            return pullCountry(countryUrl,data)
+        })
+        .then(function(data){
+            
             postData('http://localhost:3000/add',data);
         })
         .then(function(){
@@ -134,6 +156,13 @@ const travelApp = () => {
         }
         )
     };
+
+
+};
+
+export {travelApp};
+
+
 
     // Helper Functions
     const dateCountdown = (dateInput) => {
@@ -147,19 +176,8 @@ const travelApp = () => {
                 alert('Your trip needs to be at most 16 days in the future')}    
         return Math.ceil(timeDiff);
     }
-    const swapImageLink = (link) => {
-        
-        document.getElementById("main_image").src = link;
+    const swapImageLink = (elementName,link) => {
+        document.getElementById(elementName).src = link;
         return;
     }
-
-    function isUsZip(str)
-    {
-    const regexp = /^[0-9]{5}(?:-[0-9]{4})?$/;
-    
-            if (regexp.test(str)){return true;}
-            else{return false;}
-    };
-};
-
-export {travelApp};
+export{dateCountdown};
