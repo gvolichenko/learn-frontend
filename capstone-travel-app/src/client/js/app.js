@@ -26,12 +26,23 @@ const travelApp = () => {
                 geoJSON = geoJSON.postalCodes[1]    
             }
             else {geoJSON = geoJSON.postalCodes[0]}
-            geoJSON.tripdate = tripDate;
+            
             let countdownDays = dateCountdown(tripDate);
-            // handle same days trips
-            if (countdownDays==(-1)) countdownDays=0;
+
+            if (countdownDays<= 0) {
+                alert('Your trip date should be in the future. Showing the weather for today.')
+                countdownDays= 0;
+            }
+            if (countdownDays>15 ) {
+                alert('Your trip needs to be at most 15 days in the future. Showing the weather for 15 days from today.')
+                countdownDays=15;
+            } 
+
+         
             geoJSON.countdown = countdownDays;
-            // need to handle undefined here for obscure destinations
+            geoJSON.tripdate = tripDate;
+            
+            
             return geoJSON;
         }
         catch(error){console.log('ERROR!',error)
@@ -170,11 +181,8 @@ export {travelApp};
         const today = new Date();
         const future = new Date(dateInput);
         const timeDiff = (future - today) / (1000*60*60*24);
-        if (timeDiff<= (-1)) {
-            alert('Your trip date should be in the future')}
-        if (timeDiff>16 ) {
-                alert('Your trip needs to be at most 16 days in the future')}    
-        return Math.ceil(timeDiff);
+        // need to add 1 for incomplete day difference    
+        return Math.ceil(timeDiff)+1;
     }
     const swapImageLink = (elementName,link) => {
         document.getElementById(elementName).src = link;

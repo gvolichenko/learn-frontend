@@ -51,5 +51,3 @@ function sendData (request, response) {
   response.send(projectData);
   console.log('RETURNED:',projectData);
 }; 
-
-export{addWeather};

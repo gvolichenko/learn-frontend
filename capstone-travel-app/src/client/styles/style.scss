@@ -1,14 +1,14 @@
 body{
-    background: #fffff8;
+    background: lightcoral;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0px;
 }
 
 #app{
     display: grid;
-    grid-template-rows: auto auto 300px;
+    grid-template-rows: 10vh 45vh 30vh;
     /* grid-template-columns:  */
-    height:auto;
-    background: lightcoral;
+    //height:auto;
     color: black;
     justify-content: center;
     grid-gap: 2em;
@@ -75,15 +75,22 @@ body{
     grid-area: img;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    margin: 50px;
-    }
+}
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
-img{
-    width:100%;
-    min-width: 120px;
+// Force remove white border when no src is set
+.image_container img{
+    display:none;
+}
+.image_container img[src]{
+    display:block;
+    width: 80%;
+    height:auto;
+    min-height: 100px;
+    max-height: 500px;
+    border: lightcoral;
 }
 label{
     display:block;
@@ -97,8 +104,9 @@ input{
     background:#22b2da;
     color: #f0d43a;
     font-size: 20px;
-    font-family: 'Oswald', sans-serif;
     border: none;
+    font-family: 'Oswald', sans-serif;
+    padding-left: 10px;
 }
 
 button{
@@ -120,16 +128,19 @@ h1{
 textarea{
     background:#22b2da;
     color: #f0d43a;
-    font-size: 20px;
+    font-size: 10px;
     font-family: 'Oswald', sans-serif;
 }
 
  /* Tiny screens 2x5*/
  @media (max-width:601px) {
+    #app{
+        grid-template-rows: 5vh 54vh 25vh;
+    }   
     .input_container {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 120px 120px 100px 1fr;
+        grid-template-rows: 7vh 7vh 4vh 35vh;
         column-gap: 10px;
         grid-template-areas: 
             "dest "
@@ -141,11 +152,23 @@ textarea{
      .headline {
         font-size:40px
     }
-    .flag img {
+    .flag img{
         width:80px;
     }
     .title {
         font-size: 15px;
+    }
+    .image_container {
+        grid-area: img;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        }
+    label {
+        font-size: 18px;
+    }
+    input {
+        height: 40px;
     }
  }
 
@@ -160,7 +183,7 @@ button:focus {
 ::placeholder { /* Firefox, Chrome, Opera */ 
     color: #f0d43a; 
     font-family: 'Oswald', sans-serif;
-
+    font-size: 18px;
 } 
   
 :-ms-input-placeholder { /* Internet Explorer 10-11 */ 
